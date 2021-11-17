@@ -4,10 +4,14 @@ def parse_config_file(config_path):
     for i in line:
         i = i.replace(" ","")
         splitted = i.split("=")
-        try:
-            variables[splitted[0]] = int(splitted[1])
-        except:
-            variables[splitted[0]] = [float(i) for i in splitted[1].split("-")]
+
+        if ("." in splitted[1]) & ("-" not in splitted[1]):
+            variables[splitted[0]] = float(splitted[1])
+        else:
+            try:
+                variables[splitted[0]] = int(splitted[1])
+            except:
+                variables[splitted[0]] = [float(i) for i in splitted[1].split("-")]
 
     variables["width"] = variables["map_size"] * variables["img_size"]
     variables["height"] = variables["map_size"] * variables["img_size"]
